@@ -15,9 +15,10 @@ password_b2b = os.getenv('PASSWORD_b2b2')
 
 def test_partner_ubrir_b2b():
     # Given
+    # browser = setup_browser
     path_to_download_resources()
     browser_params.browser_params_1920()
-    login.ubrir('ubrir.testb2b2', 'ubrir.testb2b2')
+    login.ubrir(login_b2b, password_b2b)
 
     # When
     program_selection('Инвестор 4.1 (3 года) 105')

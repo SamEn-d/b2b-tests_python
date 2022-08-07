@@ -1,5 +1,16 @@
-# User-specific stuff
-# ...
+#allure
+tests/allure-results
+allure-results
+/tests/allure-results
+/allure-results
+/allure-report
+allure-report
+
+notification/notification.txt
+notification/notification
+notification/config.json
+#env
+.env
 
 # JetBrains
 .idea/
@@ -28,4 +39,4 @@ __pycache__/
 
 # Environments
 .venv*
-venv*/
+venv*
