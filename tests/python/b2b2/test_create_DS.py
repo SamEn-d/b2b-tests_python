@@ -1,5 +1,8 @@
 import os
 import time
+
+from selene.support.shared import browser
+
 from renlife_b2b_test.controls import browser_params
 from renlife_b2b_test.controls import login
 from renlife_b2b_test.controls import investor
@@ -13,15 +16,23 @@ from dotenv import load_dotenv
 login_b2b = os.getenv('LOGIN_b2b2')
 password_b2b = os.getenv('PASSWORD_b2b2')
 
+
+'''
+Нужно сделать
+Шаги для алюра - просто
+Подвязать внешний браузер - жопа
+Зафигачить всё это в jenkins - просто
+'''
 def test_partner_ubrir_b2b():
     # Given
     # browser = setup_browser
     path_to_download_resources()
-    browser_params.browser_params_1920()
+    browser.open('https://b2b.cloud-test.renlife.com/')
+    # browser_params.browser_params_1920()
     login.ubrir(login_b2b, password_b2b)
 
     # When
-    program_selection('Инвестор 4.1 (3 года) 105')
+    program_selection('Инвестор 4.1. (3 года)')
 
     policy_calculate_ui.UI(100000)
 
@@ -60,7 +71,7 @@ def test_partner_ubrir_b2b():
      .anketa_specialnih_znaniy()
      .memo()
      .policy()
-     .insurance_rules()
+     # .insurance_rules()
      .memo_client()
      )
     # time.sleep(5)
