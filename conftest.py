@@ -77,9 +77,9 @@ def setup_browser(request):
     # browser.config.driver = driver
 
     yield browser
-    attach.add_pagesource(browser)
+    # attach.add_pagesource(browser)
     attach.add_screenshot(browser)
     attach.add_logs(browser)
-    attach.add_video(browser)
+    # attach.add_video(browser)
     browser.quit()
     ...
