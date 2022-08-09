@@ -34,7 +34,7 @@ def test_pass(setup_browser):
 def test_partner_ubrir_b2b(setup_browser):
     # Given
     browser = setup_browser
-    allure.dynamic.tag('demoqa.com')
+    allure.dynamic.tag('B2B2')
     allure.dynamic.severity(Severity.CRITICAL)
     allure.dynamic.label('owner', 'Sam')
     allure.dynamic.description('Заполнение ДС и проверка скачивания файла')
