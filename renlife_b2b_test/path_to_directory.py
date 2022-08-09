@@ -1,4 +1,6 @@
 import os.path
+
+import pytest
 from selene.support.shared import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -16,6 +18,7 @@ def filename():
         .absolute()
         .__str__()
     )
+
 
 def path_to_download_resources():
     options = webdriver.ChromeOptions()
