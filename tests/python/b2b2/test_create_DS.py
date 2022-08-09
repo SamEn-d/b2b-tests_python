@@ -37,7 +37,7 @@ def test_partner_ubrir_b2b(setup_browser):
     allure.dynamic.tag('B2B2')
     allure.dynamic.severity(Severity.CRITICAL)
     allure.dynamic.label('owner', 'Sam')
-    allure.dynamic.description('Заполнение ДС и проверка скачивания файла')
+    allure.dynamic.description('Заполнение ДС и проверка скачивания файлов ПФ')
     # path_to_download_resources()
     browser.open('https://b2b.cloud-test.renlife.com/')
     browser.driver.set_window_size(width=1920, height=1080)
