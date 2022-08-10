@@ -121,6 +121,7 @@ def vznos_avg_no_program_plus001(avg_vznos):
 
 #Ввести 1 499 999.99 и НЕ выбрать галочку - всё хорошо
 #Ввести 1 499 999.99 и выбрать галочку - ошибка
+
 def vznos_avg_no_program_minus001(avg_vznos):
     with allure.step(f'Вводим ссумму взноса'):
         browser.element('.calculate-contract__row [name="base_sum"]').set(avg_vznos - 1)
