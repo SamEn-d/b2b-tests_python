@@ -40,6 +40,10 @@ class FillPersonalData():
             with allure.step(f'Нажимаем кнопку рассчитать'):
                 browser.element('.calculate-contract__btn-wrapper .kit-el-button').perform(command.js.click)
 
+        def submit_calculate(self):
+            with allure.step(f'Нажимаем кнопку рассчитать'):
+                browser.all('.calculate-contract__btn-wrapper .kit-el-button').should(have.text()).perform(command.js.click)
+
 def policy_results():
     with allure.step(f'Нажимаем кнопку оформить'):
         browser.element('.edit-contract__title-text').with_(timeout=30).should(have.text('Результат расчета'))
