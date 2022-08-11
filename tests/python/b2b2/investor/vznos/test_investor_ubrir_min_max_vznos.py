@@ -50,18 +50,24 @@ def precondition():
      )
 
 #min vznos
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка минимального взноса')
 @allure.title(f"Проверка минимального взноса {min_vznos}-0.01")
 def test_partner_ubrir_b2b_min_minus001():
     precondition()
     minimal_fee.vznos_minus_001(min_vznos)
     postcondition()
 
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка минимального взноса')
 @allure.title(f"Проверка минимального взноса {min_vznos}")
 def test_partner_ubrir_b2b_min():
     precondition()
     minimal_fee.vznos(min_vznos)
     postcondition()
 
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка минимального взноса')
 @allure.title(f"Проверка минимального взноса {min_vznos}+0.01")
 def test_partner_ubrir_b2b_min_plus001():
     precondition()
@@ -70,18 +76,24 @@ def test_partner_ubrir_b2b_min_plus001():
 
 
 #max vznos
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка максимального взноса')
 @allure.title(f"Проверка максимального взноса {max_vznos}-0.01")
 def test_partner_ubrir_b2b_max_minus001():
     precondition()
     minimal_fee.vznos_max_minus_001(max_vznos)
     postcondition()
 
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка максимального взноса')
 @allure.title(f"Проверка максимального взноса {max_vznos}")
 def test_partner_ubrir_b2b_max():
     precondition()
     minimal_fee.vznos_max(max_vznos)
     postcondition()
 
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка максимального взноса')
 @allure.title(f"Проверка максимального взноса {max_vznos}+0.01")
 def test_partner_ubrir_b2b_max_plus001():
     precondition()
@@ -96,24 +108,32 @@ def test_partner_ubrir_b2b_max_plus001():
 #Ввести 1 499 999.99 и выбрать галочку - ошибка
 #Ввести 1 500 000.01 и выбрать галочку - всё хорошо
 #Ввести 1 500 000.01 и НЕ выбрать галочку - ошибка
-@allure.title(f"Проверка максимального взноса {average_vznos} без программы")
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка среднее \ граничное значение взноса')
+@allure.title(f"Проверка взноса {average_vznos} без программы")
 def test_partner_ubrir_b2b_avg_no_program():
     precondition()
     minimal_fee.vznos_avg_no_program(average_vznos)
     postcondition()
 
-@allure.title(f"Проверка максимального взноса {average_vznos} с программой")
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка среднее \ граничное значение взноса')
+@allure.title(f"Проверка взноса {average_vznos} с программой")
 def test_partner_ubrir_b2b_avg_program():
     precondition()
     minimal_fee.vznos_avg_program(average_vznos)
     postcondition()
 
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка среднее \ граничное значение взноса')
 @allure.title(f"Проверка максимального взноса {average_vznos}+0.01 с программой")
 def test_partner_ubrir_b2b_avg_program_plus001():
     precondition()
     minimal_fee.vznos_avg_program_plus001(average_vznos)
     postcondition()
 
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка среднее \ граничное значение взноса')
 @allure.title(f"Проверка максимального взноса {average_vznos}+0.01 без программы")
 def test_partner_ubrir_b2b_avg_no_program_plus001():
     precondition()
@@ -121,12 +141,16 @@ def test_partner_ubrir_b2b_avg_no_program_plus001():
     postcondition()
 
 #флаки тесты при копейке
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка среднее \ граничное значение взноса')
 @allure.title(f"Проверка максимального взноса {average_vznos}-1 без программы")
 def test_partner_ubrir_b2b_avg_no_program_minus001():
     precondition()
     minimal_fee.vznos_avg_no_program_minus001(average_vznos)
     postcondition()
 
+@allure.parent_suite('Проверка взноса')
+@allure.suite('Проверка среднее \ граничное значение взноса')
 @allure.title(f"Проверка максимального взноса {average_vznos}-1 c программы")
 def test_partner_ubrir_b2b_avg_no_program_minus001():
     precondition()
