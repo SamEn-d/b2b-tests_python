@@ -2,5 +2,3 @@ selene>=2.0.0b5
 pytest
 allure-pytest==2.9.45
 python-dotenv==0.20.0
-jwt
-demjson
