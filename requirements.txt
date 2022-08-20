@@ -3,4 +3,4 @@ pytest
 allure-pytest==2.9.45
 python-dotenv==0.20.0
 jwt
-# jose
+demjson

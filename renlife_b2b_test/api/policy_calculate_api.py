@@ -1,3 +1,4 @@
+import datetime
 import json
 
 
@@ -31,7 +32,7 @@ def policy_calculate_zapros_api(
             "insured": [
                 {
                     "assured_is_insuree": true,
-                    "birth_date": "''' + birth_date + '''",
+                    "birth_date": "''' + str(birth_date) + '''",
                     "borlas_contact_id": null,
                     "gender": "f",
                     "surname": "Фамилия",
@@ -99,7 +100,7 @@ def policy_calculate_zapros_api(
                 "policy_period_brief": "''' + policy_period_brief + '''",
                 "product_brief": "''' + product_brief + '''",
                 "reinvested_pol_header_id": null,
-                "start_date": "''' + start_date + '''"
+                "start_date": "''' + str(datetime.date.today()) + '''"
             },
             "save_policy": "''' + save_policy + '''"
         }

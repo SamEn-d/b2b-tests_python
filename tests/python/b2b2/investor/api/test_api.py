@@ -1,3 +1,4 @@
+
 import os
 import requests
 import json
@@ -40,43 +41,25 @@ def test_api_token():
 
 def test_policy_calculate_api():
     headers_token = {"Authorization": test_api_token()}
-    # print(type(zapros))
-    # print(type(parsed))
-    # data = {zapros},
-    # json = {zapros}
-    # r = requests.post('https://gateway.cloud-test.renlife.com/api/v1/grs/rpc', data=(parsed), client_id=('grs'), client_secret=('441314ea-197d-4d2e-b693-cd002b211d55'),scope=('gateway'), grant_type=('client_credentials') )
     r = requests.post('https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc', json=(policy_calculate_json), headers=headers_token)
     print(r.text)
-
     policy_calculate = json.loads(r.text)
     ids = policy_calculate['result']['policy']['ids']
     policy_header_id = policy_calculate['result']['policy']['policy_header_id']
+    asset_id = policy_calculate['result']['insured'][0]['asset_id']
     print(ids)
     print(policy_header_id)
+    policy_update_info = policy_update_info_api(birth_date='2000-10-10', ids=ids, policy_header_id=policy_header_id, asset_id=asset_id)
+    print(type(policy_update_info))
 
-    policy_update_info = policy_update_info_api(birth_date='2000-10-10', ids=ids, policy_header_id=policy_header_id)
-    policy_update_info_json = json.loads(policy_update_info)
 
     r_policy_update_info = requests.post(
         'https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc',
-        # data=(zaebzaeb),
-        json=(policy_update_info_json),
+        # data=(policy_update_info),
+        # body=(policy_update_info_json),
+        json=(policy_update_info),
         headers=headers_token)
     print(r_policy_update_info.text)
-
-    # # Не получается прокинуть policy_update_info - ошибка
-
-    # policy_update = policy_update_info_api(birth_date='2000-10-10', ids=ids, policy_header_id=policy_header_id)
-    # # print(policy_update)
-    # # policy_update_json = json.loads(json.dumps(policy_update)).encode("utf-8")
-    # policy_update_json = json.loads(json.dumps(policy_update)).encode("utf-8")
-    #
-
-    # r_policy_update_info = requests.post(
-    #     'https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc',
-    #     data=(policy_update_json),
-    #     headers=headers_token)
-    # print(r_policy_update_info.text)
 
 
 
@@ -90,123 +73,6 @@ def test_policy_ids():
     print(rr['result']['policy']['policy_header_id'])
     ids = rr['result']['policy']['ids']
     policy_header_id = rr['result']['policy']['policy_header_id']
-
-
-ydalit_na = '''	{
-		"method": "policy_update_info",
-		"params": {
-			"insured": [{
-				"addresses": [{
-						"address": "Россия, г Москва, Дербеневская наб, д 7 стр 22, кв 11",
-						"type": "const",
-						"zip": "115114"
-					},
-					{
-						"address": "Россия, г Москва, Дербеневская наб, д 7 стр 22, кв 11",
-						"type": "fact",
-						"zip": "115114"
-					}
-				],
-				"asset_id": 40522274,
-				"assignees": [],
-				"assured_is_insuree": true,
-				"birth_date": "2000-10-10",
-				"certificates": [{
-					"code": "132-001",
-					"date": "2020-01-12",
-					"num": "123456",
-					"post": "ОВД ОКТЯБРЬСКОГО РАЙОНА Г. САРАНСКА",
-					"ser": "1234",
-					"type": "PASS_RF"
-				}],
-				"citizenships": [],
-				"country_birth_alpha3": "RUS",
-				"email": "w@wth.su",
-				"gender": "f",
-				"has_additional_citizenship": 0,
-				"has_foreign_residency": 0,
-				"insured_type": "ASSET_PERSON",
-				"is_foreign": 0,
-				"surname": "Фамилия",
-				"name": "Имя",
-				"midname": "Отчество",
-				"pdl_list": [],
-				"phones": [{
-					"alfa3_code": "RUS",
-					"num": "9625550123",
-					"type": "MOBIL"
-				}],
-				"place_of_birth": "Место рождения",
-				"residencies": []
-			}],
-			"insuree": {
-				"addresses": [{
-						"address": "Россия, г Москва, Дербеневская наб, д 7 стр 22, кв 11",
-						"type": "const",
-						"zip": "115114"
-					},
-					{
-						"address": "Россия, г Москва, Дербеневская наб, д 7 стр 22, кв 11",
-						"type": "fact",
-						"zip": "115114"
-					}
-				],
-				"birth_date": "2000-10-10",
-				"certificates": [{
-					"code": "132-001",
-					"date": "2020-01-12",
-					"num": "123456",
-					"post": "ОВД ОКТЯБРЬСКОГО РАЙОНА Г. САРАНСКА",
-					"ser": "1234",
-					"type": "PASS_RF"
-				}],
-				"citizenships": [],
-				"country_birth_alpha3": "RUS",
-				"email": "w@wth.su",
-				"gender": "f",
-				"has_additional_citizenship": 0,
-				"has_foreign_residency": 0,
-				"is_foreign": 0,
-				"surname": "Фамилия",
-				"name": "Имя",
-				"midname": "Отчество",
-				"pdl_list": [],
-				"phones": [{
-					"alfa3_code": "RUS",
-					"num": "9625550123",
-					"type": "MOBIL"
-				}],
-				"place_of_birth": "фыв",
-				"residencies": []
-			},
-			"policy": {
-				"ids": 4870788818,
-				"is_online": 0,
-				"policy_header_id": 510279487,
-				"product_brief": "INVESTOR_LUMP_4.1_BASE3_105_TM_CB"
-			}
-		}
-	}'''
-
-policy_update_info = policy_update_info_api(birth_date='2000-10-10', ids=4870788818, policy_header_id=510279487)
-zaebzaeb = json.loads(ydalit_na)
-def test_policy_policy_update_info():
-    print(' ')
-    # print(olicy_update_info_api)
-    print(type(zaebzaeb))
-    headers_token = {"Authorization": test_api_token()}
-    r_policy_update_info = requests.post(
-        'https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc',
-        # data=(zaebzaeb),
-        json=(zaebzaeb),
-        headers=headers_token)
-
-    # data_to_send = json.dumps(data).encode("utf-8")
-    # request_object = self.requests.put(request_ref, headers=headers, data=data_to_send)
-
-    print(r_policy_update_info.text)
-
-
 
 ''' _________ VZNOS ________'''
 min_vznos = 30000
@@ -321,6 +187,7 @@ import datetime
 min_vozrast = 18
 max_vozrast = 85
 
+
 date = datetime.date.today()
 year = date.year
 month = date.month
@@ -333,14 +200,19 @@ if day < 10:
 
 def test_api_age(y:int = 0,d:int = 0):
     age = str(year-y) + '-' + str(month) + '-' + str(day+d)
-    print(age)
+    # print(age)
+    return age
 
+''' ----------------- DEL ------------------'''
 def test_del_test():
-    test_api_age(y=18,d=1)
-    test_api_age(y=18,d=-1)
+    test_api_age(y=min_vozrast,d=1)
+    test_api_age(y=min_vozrast,d=-1)
+    test_api_age(y=max_vozrast,d=0)
+    test_api_age(y=max_vozrast,d=1)
+    test_api_age(y=max_vozrast,d=-1)
 
-def vznos_policy_calculate_age(birth_date):
-    vznos_policy_calculate_age = policy_calculate_zapros_api(dtp_risk=0,
+def zaros_policy_calculate_age(birth_date):
+    policy_calculate_age = policy_calculate_zapros_api(dtp_risk=0,
                                                                     breef='INVESTOR_LUMP_4.1_BASE3_113_TM_CB_UBRIR',
                                                                     birth_date=birth_date, ag_contract_num=91061,
                                                                     base_sum=100000, bso_series=487,
@@ -349,26 +221,59 @@ def vznos_policy_calculate_age(birth_date):
                                                                     product_brief='INVESTOR_LUMP_4.1_BASE3_113_TM_CB',
                                                                     start_date='2022-08-15',
                                                                     calc_only='YES', save_policy='NO')
-    return vznos_policy_calculate_age
+    # print(policy_calculate_age)
+    return policy_calculate_age
 
-def policy_calculate_age(zapros_summa):
+
+
+def policy_calculate_age(zapros_age):
     headers_token = {"Authorization": test_api_token()}
     r = requests.post(
         'https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc',
-        json=(zapros_summa),
+        json=zapros_age,
         headers=headers_token)
     print(r.text)
     return r.text
 
-# min_age_api = json.loads(vznos_policy_calculate_zapros_api(min_vznos, dtp_risk_15kk=0))
-# min_age_api = json.loads(vznos_policy_calculate_zapros_api(min_vznos, dtp_risk_15kk=0))
+# avg_vznos_api_plus_1_risk_on = json.loads(vznos_policy_calculate_zapros_api(avg_vznos+1, dtp_risk_15kk=1))
+# min_age_api = policy_calculate_age(test_api_age(y=min_vozrast,d=0))
+# policy_calculate_vznos
+min_age_api = json.loads(zaros_policy_calculate_age(test_api_age(y=min_vozrast,d=0)))
+min_age_minus_1d_api = json.loads(zaros_policy_calculate_age(test_api_age(y=min_vozrast,d=-1)))
+min_age_plus_1d_api = json.loads(zaros_policy_calculate_age(test_api_age(y=min_vozrast,d=+1)))
 
+
+
+''' Min age '''
 def test_policy_calculate_min_age():
-    policy_calculate_vznos(avg_vznos_api_plus_1_risk_on)
-    assertion = json.loads(policy_calculate_vznos(avg_vznos_api_plus_1_risk_on))
-    assert assertion['result']['insured'][0]['fee'] == avg_vznos + 1
+    assertion = json.loads(policy_calculate_age(min_age_api))
+    assert assertion['result']['insured'][0]['person_info']['birth_date'] == test_api_age(y=min_vozrast,d=0) + 'T00:00:00'
 
-# def test_print():
-#     print('')
-#     print(zapppros)
-#     # print(vznos_policy_calculate_zapros_api(30000))
+
+def test_policy_calculate_min_age_minus_1d_age():
+    assertion = json.loads(policy_calculate_age(min_age_minus_1d_api))
+    assert assertion['result']['insured'][0]['person_info']['birth_date'] == test_api_age(y=min_vozrast,d=-1) + 'T00:00:00'
+
+
+def test_policy_calculate_min_age_plus_1d_age():
+    assertion = json.loads(policy_calculate_age(min_age_plus_1d_api))
+    assert assertion['error']['data']['status'] == 'ERROR'
+
+max_age_api = json.loads(zaros_policy_calculate_age(test_api_age(y=max_vozrast+1,d=0)))
+max_age_minus_1d_api = json.loads(zaros_policy_calculate_age(test_api_age(y=max_vozrast+1,d=-1)))
+max_age_plus_1d_api = json.loads(zaros_policy_calculate_age(test_api_age(y=max_vozrast+1,d=+1)))
+''' Max age '''
+def test_policy_calculate_max_age():
+    assertion = json.loads(policy_calculate_age(max_age_api))
+    assert assertion['result']['insured'][0]['person_info']['birth_date'] == test_api_age(y=max_vozrast+1,d=0) + 'T00:00:00'
+
+
+def test_policy_calculate_max_age_minus_1d_age():
+    assertion = json.loads(policy_calculate_age(max_age_minus_1d_api))
+    assert assertion['error']['data']['status'] == 'ERROR'
+
+
+def test_policy_calculate_max_age_plus_1d_age():
+    assertion = json.loads(policy_calculate_age(max_age_plus_1d_api))
+    assert assertion['result']['insured'][0]['person_info']['birth_date'] == test_api_age(y=max_vozrast+1,d=+1) + 'T00:00:00'
+
