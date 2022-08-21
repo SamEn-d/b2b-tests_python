@@ -6,6 +6,8 @@ import json
 from renlife_b2b_test.api.policy_calculate_api import policy_calculate_zapros_api
 from renlife_b2b_test.api.policy_update_info_api import policy_update_info_api
 from allure_commons.types import AttachmentType
+from renlife_b2b_test.jwt_decode import jwt_decode
+from renlife_b2b_test.policy_calculate_data import create_data_policy_calculate, read_data_create_data_policy_calculate
 
 login_b2b = os.getenv('LOGIN_b2b2')
 password_b2b = os.getenv('PASSWORD_b2b2')
@@ -44,12 +46,13 @@ def test_api_token():
     access_token = token_request_json['access_token']
     return access_token
 
-
 @allure.parent_suite('API Создание ДС')
 @allure.suite('API Создание ДС')
 @allure.title(f"API policy_calculate + policy_update_info")
 def test_policy_calculate_api():
-    headers_token = {"Authorization": test_api_token()}
+    test_api_token_session = test_api_token()
+    headers_token = {"Authorization": test_api_token_session}
+    uuid = jwt_decode(test_api_token_session)
     with allure.step(f'Создаём договор'):
         r = requests.post('https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc', json=(policy_calculate_json), headers=headers_token)
         # print(r.text)
@@ -58,6 +61,7 @@ def test_policy_calculate_api():
         with allure.step(f'Создался договор ID: {ids}'):
             policy_header_id = policy_calculate['result']['policy']['policy_header_id']
             asset_id = policy_calculate['result']['insured'][0]['asset_id']
+        create_data_policy_calculate(ids=ids, policy_header_id=policy_header_id, uuid=uuid)
 
     with allure.step(f'Обновляем персональные данные в ДС: {ids}'):
         policy_update_info = policy_update_info_api(birth_date='2000-10-10', ids=ids, policy_header_id=policy_header_id, asset_id=asset_id)
@@ -67,6 +71,10 @@ def test_policy_calculate_api():
             headers=headers_token)
         assertion = json.loads(r_policy_update_info.text)
     assert assertion['result']['insured'][0]['asset_id'] == asset_id
+    return {'policy_header_id': policy_header_id, 'ids': ids, 'uuid': uuid}
+
+
+
 
 ''' _________ VZNOS ________'''
 def vznos_policy_calculate_zapros_api(base_summa, dtp_risk_15kk):
@@ -320,4 +328,80 @@ def test_policy_calculate_max_age_plus_1d_age():
     with allure.step(f'Проверка максимального возраста {max_vozrast}+1 день'):
         assertion = json.loads(policy_calculate_age(max_age_plus_1d_api))
         assert assertion['result']['insured'][0]['person_info']['birth_date'] == api_age(y=max_vozrast + 1, d=+1) + 'T00:00:00'
+
+''' __________ Доступные ПФ для печати___________'''
+def print_zapros(print_zapros):
+    test_api_token_session = test_api_token()
+    headers_token = {"Authorization": test_api_token_session}
+    uuid = jwt_decode(test_api_token_session)
+    r = requests.post('https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc', json=(print_zapros),
+                      headers=headers_token)
+    return json.loads(r.text)
+
+def print_file(doc_brief):
+    read_data = read_data_create_data_policy_calculate()
+    policy = {
+        "method": "b2b_get_policy_report_uuid",
+        "params": {
+            "doc_brief": doc_brief,
+            "ids": read_data['ids'],
+            "policy_header_id": read_data['policy_header_id'],
+            "user_uuid": read_data['uuid']
+        }
+    }
+    return policy
+
+@allure.parent_suite('API проверка печати')
+@allure.suite('API проверка печати')
+@allure.title(f"API проверка печати полиса")
+def test_print_policy():
+    read_data = read_data_create_data_policy_calculate()
+    policy = print_file('POLICY')
+    response = print_zapros(policy)
+    assert response['method'] == 'b2b_get_policy_report_uuid'
+
+@allure.parent_suite('API проверка печати')
+@allure.suite('API проверка печати')
+@allure.title(f"API проверка печати Выкупные суммы")
+def test_print_vs():
+    read_data = read_data_create_data_policy_calculate()
+    policy = print_file('APPLICATION_REFUNDABLE_AMOUNTS')
+    response = print_zapros(policy)
+    assert response['method'] == 'b2b_get_policy_report_uuid'
+
+@allure.parent_suite('API проверка печати')
+@allure.suite('API проверка печати')
+@allure.title(f"API проверка печати Уведомление")
+def test_print_vs():
+    read_data = read_data_create_data_policy_calculate()
+    policy = print_file('CONFIRM_POLICY')
+    response = print_zapros(policy)
+    assert response['method'] == 'b2b_get_policy_report_uuid'
+
+@allure.parent_suite('API проверка печати')
+@allure.suite('API проверка печати')
+@allure.title(f"API проверка печати Анкета специальных знаний ИСЖ")
+def test_print_vs():
+    read_data = read_data_create_data_policy_calculate()
+    policy = print_file('KNOWLEDGE_ISZH_QUEST')
+    response = print_zapros(policy)
+    assert response['method'] == 'b2b_get_policy_report_uuid'
+
+@allure.parent_suite('API проверка печати')
+@allure.suite('API проверка печати')
+@allure.title(f"API проверка печати Памятка")
+def test_print_vs():
+    read_data = read_data_create_data_policy_calculate()
+    policy = print_file('MEMO')
+    response = print_zapros(policy)
+    assert response['method'] == 'b2b_get_policy_report_uuid'
+
+@allure.parent_suite('API проверка печати')
+@allure.suite('API проверка печати')
+@allure.title(f"API проверка печати Памятка для клиента")
+def test_print_vs():
+    read_data = read_data_create_data_policy_calculate()
+    policy = print_file('REMINDER')
+    response = print_zapros(policy)
+    assert response['method'] == 'b2b_get_policy_report_uuid'
 

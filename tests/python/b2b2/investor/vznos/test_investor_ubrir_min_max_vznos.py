@@ -156,7 +156,5 @@ def postcondition():
     time.sleep(1)
     attach.add_screenshot(browser)
     browser.quit()
-    '''
-    Написать так, чтобы была проверка про при взносе до 30 000 выходила ошибка автоматически отнимая 1 копейку
-    '''
+
 
