@@ -37,7 +37,7 @@ policy_calculate_zapros = policy_calculate_zapros_api(
 )
 policy_calculate_json = json.loads(policy_calculate_zapros)
 
-@allure.parent_suite('Проверка получения токена')
+@allure.parent_suite('API Проверка получения токена')
 @allure.suite('API получения токена')
 @allure.title(f"API получения токена")
 def test_api_token():
@@ -372,7 +372,7 @@ def test_print_vs():
 @allure.parent_suite('API проверка печати')
 @allure.suite('API проверка печати')
 @allure.title(f"API проверка печати Уведомление")
-def test_print_vs():
+def test_print_yvedomlenie():
     read_data = read_data_create_data_policy_calculate()
     policy = print_file('CONFIRM_POLICY')
     response = print_zapros(policy)
@@ -381,7 +381,7 @@ def test_print_vs():
 @allure.parent_suite('API проверка печати')
 @allure.suite('API проверка печати')
 @allure.title(f"API проверка печати Анкета специальных знаний ИСЖ")
-def test_print_vs():
+def test_print_anketa_isj():
     read_data = read_data_create_data_policy_calculate()
     policy = print_file('KNOWLEDGE_ISZH_QUEST')
     response = print_zapros(policy)
@@ -390,7 +390,7 @@ def test_print_vs():
 @allure.parent_suite('API проверка печати')
 @allure.suite('API проверка печати')
 @allure.title(f"API проверка печати Памятка")
-def test_print_vs():
+def test_print_memo():
     read_data = read_data_create_data_policy_calculate()
     policy = print_file('MEMO')
     response = print_zapros(policy)
@@ -399,7 +399,7 @@ def test_print_vs():
 @allure.parent_suite('API проверка печати')
 @allure.suite('API проверка печати')
 @allure.title(f"API проверка печати Памятка для клиента")
-def test_print_vs():
+def test_print_klient_memo():
     read_data = read_data_create_data_policy_calculate()
     policy = print_file('REMINDER')
     response = print_zapros(policy)

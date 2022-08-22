@@ -3,6 +3,7 @@ import time
 
 import allure
 from allure_commons.types import Severity
+from selene import be
 from selene.support.shared import browser
 
 from renlife_b2b_test.controls import browser_params
@@ -18,18 +19,9 @@ from renlife_b2b_test.controls.verification_ds import Verification_DS, PFCheck
 login_b2b = os.getenv('LOGIN_b2b2')
 password_b2b = os.getenv('PASSWORD_b2b2')
 
-def test_pass(setup_browser):
-    browser = setup_browser
-    browser.open('https://b2b.cloud-test.renlife.com/')
-    ...
 
-'''
-Нужно сделать
-Подвязать внешний браузер - жопа
-Шаги для алюра - просто
-Зафигачить всё это в jenkins - просто
-'''
-
+@allure.parent_suite('Создание ДС')
+@allure.suite('Создание ДС и проверка файлов')
 @allure.title("Б2Б2 УБРИР Инвестор 4.1. (3 года) создание ДС и скачивание файлов")
 def test_partner_ubrir_b2b(setup_browser):
     # Given
@@ -45,6 +37,8 @@ def test_partner_ubrir_b2b(setup_browser):
     login.ubrir(login_b2b, password_b2b)
 
     # When
+    time.sleep(2)
+    browser.element('.el-button.kit-el-button.el-button--info').with_(timeout=5).should(be.visible).click()
     program_selection('Инвестор 4.1. (3 года)')
 
     policy_calculate_ui.UI(100000)

@@ -3,6 +3,7 @@ import time
 
 import allure
 from allure_commons.types import Severity
+from selene import be
 from selene.support.shared import browser
 
 from conftest import setup_browser
@@ -21,7 +22,6 @@ max_vznos = 50000000
 
 def precondition():
     # Given
-    # browser = setup_browser
     allure.dynamic.tag('B2B2')
     allure.dynamic.severity(Severity.CRITICAL)
     allure.dynamic.label('owner', 'Sam')
@@ -33,6 +33,10 @@ def precondition():
     login.ubrir(login_b2b, password_b2b)
 
     # When
+    time.sleep(2)
+    browser.element('.el-button.kit-el-button.el-button--info').with_(timeout=5).should(be.visible).click()
+    # browser.element('.inner-wrapper > .el-loading-mask').with_(timeout=30).should(be.hidden)
+    # browser.element('.el-button.kit-el-button.el-button--info').click()
     program_selection('Инвестор 4.1. (3 года)')
 
     investor.investor_question(0)
@@ -146,7 +150,7 @@ def test_partner_ubrir_b2b_avg_no_program_minus001():
 @allure.parent_suite('Проверка взноса')
 @allure.suite('Проверка среднее \ граничное значение взноса')
 @allure.title(f"Проверка максимального взноса {average_vznos}-1 c программы")
-def test_partner_ubrir_b2b_avg_no_program_minus001():
+def test_partner_ubrir_b2b_avg_c_program_minus001():
     precondition()
     minimal_fee.vznos_avg_program_minus001(average_vznos)
     postcondition()

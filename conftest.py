@@ -43,16 +43,16 @@ def path_to_download_resources():
 
 @pytest.fixture(scope='function')
 def setup_browser(request):
-    # options = webdriver.ChromeOptions()
-    # prefs = {
-    #     "download.default_directory": os.path.join(filename(), 'tmp'),
-    #     "download.prompt_for_download": False
-    # }
-    # options.add_experimental_option("prefs", prefs)
-    #
-    # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    # browser.config.driver = driver
-    # browser.config.hold_browser_open = True
+    options = webdriver.ChromeOptions()
+    prefs = {
+        "download.default_directory": os.path.join(filename(), 'tmp'),
+        "download.prompt_for_download": False
+    }
+    options.add_experimental_option("prefs", prefs)
+
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    browser.config.driver = driver
+    browser.config.hold_browser_open = True
     path_to_download_resources()
     options = Options()
     selenoid_capabilities = {
