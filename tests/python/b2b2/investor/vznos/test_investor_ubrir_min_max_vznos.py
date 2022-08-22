@@ -14,6 +14,7 @@ from renlife_b2b_test import minimal_fee, attach
 
 login_b2b = os.getenv('LOGIN_b2b2')
 password_b2b = os.getenv('PASSWORD_b2b2')
+url = os.getenv('URL_FRONT')
 
 min_vznos = 30000
 average_vznos = 1500000
@@ -27,7 +28,7 @@ def precondition():
     allure.dynamic.label('owner', 'Sam')
     allure.dynamic.description('Заполнение ДС и проверка скачивания файлов ПФ')
     # path_to_download_resources()
-    browser.open('https://b2b.cloud-test.renlife.com/')
+    browser.open(url)
     browser.driver.set_window_size(width=1920, height=1080)
     # browser_params.browser_params_1920()
     login.ubrir(login_b2b, password_b2b)

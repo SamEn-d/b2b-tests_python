@@ -11,7 +11,8 @@ from renlife_b2b_test.policy_calculate_data import create_data_policy_calculate,
 
 login_b2b = os.getenv('LOGIN_b2b2')
 password_b2b = os.getenv('PASSWORD_b2b2')
-auth_url = 'https://auth.cloud-test.renlife.com/auth/realms/test/protocol/openid-connect/token'
+auth_url = os.getenv('URL_TOKEN')
+url = os.getenv('URL_API')
 client_id = 'b2b-frontend'
 body = 'grant_type=password' + '&client_id=' + client_id + '&username=' + login_b2b + '&password=' + password_b2b;
 header_token_type = {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}
@@ -54,7 +55,7 @@ def test_policy_calculate_api():
     headers_token = {"Authorization": test_api_token_session}
     uuid = jwt_decode(test_api_token_session)
     with allure.step(f'Создаём договор'):
-        r = requests.post('https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc', json=(policy_calculate_json), headers=headers_token)
+        r = requests.post(url, json=(policy_calculate_json), headers=headers_token)
         # print(r.text)
         policy_calculate = json.loads(r.text)
         ids = policy_calculate['result']['policy']['ids']
@@ -65,8 +66,7 @@ def test_policy_calculate_api():
 
     with allure.step(f'Обновляем персональные данные в ДС: {ids}'):
         policy_update_info = policy_update_info_api(birth_date='2000-10-10', ids=ids, policy_header_id=policy_header_id, asset_id=asset_id)
-        r_policy_update_info = requests.post(
-            'https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc',
+        r_policy_update_info = requests.post(url,
             json=(policy_update_info),
             headers=headers_token)
         assertion = json.loads(r_policy_update_info.text)
@@ -91,8 +91,7 @@ def vznos_policy_calculate_zapros_api(base_summa, dtp_risk_15kk):
 
 def policy_calculate_vznos(zapros_summa):
     headers_token = {"Authorization": test_api_token()}
-    r = requests.post(
-        'https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc',
+    r = requests.post(url,
         json=(zapros_summa),
         headers=headers_token)
     allure.attach(r.text, 'page_source', AttachmentType.HTML, '.html')
@@ -261,8 +260,7 @@ def zaros_policy_calculate_age(birth_date):
 
 def policy_calculate_age(zapros_age):
     headers_token = {"Authorization": test_api_token()}
-    r = requests.post(
-        'https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc',
+    r = requests.post(url,
         json=zapros_age,
         headers=headers_token)
     print(r.text)
@@ -334,8 +332,7 @@ def print_zapros(print_zapros):
     test_api_token_session = test_api_token()
     headers_token = {"Authorization": test_api_token_session}
     uuid = jwt_decode(test_api_token_session)
-    r = requests.post('https://gateway.cloud-test.renlife.com/api/v1/b2b/rpc', json=(print_zapros),
-                      headers=headers_token)
+    r = requests.post(url, json=(print_zapros), headers=headers_token)
     return json.loads(r.text)
 
 def print_file(doc_brief):
