@@ -1,6 +1,4 @@
 import datetime
-import json
-
 
 def policy_calculate_zapros_api(
         breef: str = 'INVESTOR_LUMP_4.1_BASE3_113_TM_CB_UBRIR',
@@ -12,12 +10,11 @@ def policy_calculate_zapros_api(
         payment_terms: str = 'Единовременно',
         policy_period_brief: str = '3_YEARS',
         product_brief: str = 'INVESTOR_LUMP_4.1_BASE3_113_TM_CB',
-        start_date: str = '2022-08-15',
         dtp_risk: int = None,
         calc_only: str = 'NO',
-        save_policy:str = 'YES'
+        save_policy: str = 'YES'
                             ):
-    policy_calculate_zapros_api = '''
+    policy_calculate_zapros_api ='''
     {
         "method": "policy_calculate",
         "params": {
@@ -117,19 +114,3 @@ def risk__ad_avto(enable_risk):
     },
     '''
     return risk if enable_risk == 1 else ''
-
-
-def test_risk__ad_avto():
-    print(risk__ad_avto(enable_risk=1))
-
-
-def test_print():
-    print(policy_calculate_zapros_api(dtp_risk=0, breef='INVESTOR_LUMP_4.1_BASE3_113_TM_CB_UBRIR', birth_date='2000-10-10', ag_contract_num= 91061, base_sum= 30000, bso_series = 487, payment_terms= 'Единовременно', policy_period_brief= '3_YEARS', product_brief= 'INVESTOR_LUMP_4.1_BASE3_113_TM_CB', start_date= '2022-08-15'))
-
-def test_vznos():
-    print(policy_calculate_zapros_api(dtp_risk=0, breef='INVESTOR_LUMP_4.1_BASE3_113_TM_CB_UBRIR',
-                                      birth_date='2000-10-10', ag_contract_num=91061, base_sum=30000, bso_series=487,
-                                      payment_terms='Единовременно', policy_period_brief='3_YEARS',
-                                      product_brief='INVESTOR_LUMP_4.1_BASE3_113_TM_CB', start_date='2022-08-15',
-                                      calc_only='YES', save_policy='NO')
-          )

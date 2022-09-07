@@ -3,3 +3,5 @@ pytest
 allure-pytest==2.9.45
 python-dotenv==0.20.0
 urllib3==1.26.11
+requests
+pytest-xdist==2.5.0

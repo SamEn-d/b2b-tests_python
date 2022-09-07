@@ -50,28 +50,24 @@ def setup_browser(request):
     }
     options.add_experimental_option("prefs", prefs)
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    browser.config.driver = driver
-    browser.config.hold_browser_open = True
+    # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    # browser.config.driver = driver
+    # browser.config.hold_browser_open = True
     path_to_download_resources()
-    options = Options()
-    selenoid_capabilities = {
-        "browserName": "chrome",
-        "browserVersion": "104.0",
-        "selenoid:options": {
-            "enableVNC": False,
-            "enableVideo": False
-        }
-    }
-    options.capabilities.update(selenoid_capabilities)
+    # options = Options()
+    # selenoid_capabilities = {
+    #     "browserName": "chrome",
+    #     "browserVersion": "104.0",
+    #     "selenoid:options": {
+    #         "enableVNC": False,
+    #         "enableVideo": False
+    #     }
+    # }
+    # options.capabilities.update(selenoid_capabilities)
 
-    # login = os.getenv('LOGIN')
-    # password = os.getenv('PASSWORD')
     selenoid_browser = os.getenv('BROWSER')
-    #command_executor = f"https://user1:1234@selenoid.autotests.cloud/wd/hub",
-
     # driver = webdriver.Remote(
-    #     command_executor=f"http://{selenoid_browser}:4444/wd/hub",
+    #     command_executor = f"{selenoid_browser}",
     #     options=options
     # )
     # browser.config.driver = driver
@@ -80,6 +76,4 @@ def setup_browser(request):
     # attach.add_pagesource(browser)
     attach.add_screenshot(browser)
     attach.add_logs(browser)
-    # attach.add_video(browser)
     browser.quit()
-    ...

@@ -1,6 +1,3 @@
-import json
-
-
 def policy_update_info_api(
 	birth_date: str = '2000-10-10',
 	ids: int = None,
@@ -115,16 +112,3 @@ def policy_update_info_api(
         }
     }
 	return policy_update_info
-
-def test_priny():
-	print(' ')
-	test_json = policy_update_info_api(birth_date='2000-10-10',ids=510276621,policy_header_id=510276621,product_brief='INVESTOR_LUMP_4.1_BASE3_105_TM_CB')
-	# json_print = json.loads(test_json)
-	print(test_json)
-	# print(
-	# 		policy_update_info_api(
-	# 			birth_date='2000-10-10',
-	# 			ids=510276621,
-	# 			policy_header_id=510276621,
-	# 			product_brief = 'INVESTOR_LUMP_4.1_BASE3_105_TM_CB'
-	# 		))
